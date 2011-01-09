@@ -1,0 +1,94 @@
+
+fibo:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+0c000000 <nibbleToAscii>:
+ c000000:	e2800030 	add	r0, r0, #48	; 0x30
+ c000004:	e20000ff 	and	r0, r0, #255	; 0xff
+ c000008:	e3500039 	cmp	r0, #57	; 0x39
+ c00000c:	82800007 	addhi	r0, r0, #7
+ c000010:	820000ff 	andhi	r0, r0, #255	; 0xff
+ c000014:	e12fff1e 	bx	lr
+
+0c000018 <intToHexa>:
+ c000018:	e92d4070 	push	{r4, r5, r6, lr}
+ c00001c:	e1a06000 	mov	r6, r0
+ c000020:	e3a04018 	mov	r4, #24
+ c000024:	e1a05436 	lsr	r5, r6, r4
+ c000028:	e20550ff 	and	r5, r5, #255	; 0xff
+ c00002c:	e1a00225 	lsr	r0, r5, #4
+ c000030:	e2800030 	add	r0, r0, #48	; 0x30
+ c000034:	e3500039 	cmp	r0, #57	; 0x39
+ c000038:	82800007 	addhi	r0, r0, #7
+ c00003c:	e0466415 	sub	r6, r6, r5, lsl r4
+ c000040:	e205500f 	and	r5, r5, #15
+ c000044:	eb000015 	bl	c0000a0 <serial_putc>
+ c000048:	e2850030 	add	r0, r5, #48	; 0x30
+ c00004c:	e3500039 	cmp	r0, #57	; 0x39
+ c000050:	82800007 	addhi	r0, r0, #7
+ c000054:	e2444008 	sub	r4, r4, #8
+ c000058:	eb000010 	bl	c0000a0 <serial_putc>
+ c00005c:	e3740008 	cmn	r4, #8
+ c000060:	1affffef 	bne	c000024 <intToHexa+0xc>
+ c000064:	e8bd4070 	pop	{r4, r5, r6, lr}
+ c000068:	e12fff1e 	bx	lr
+
+0c00006c <main>:
+ c00006c:	eb000003 	bl	c000080 <serial_init>
+ c000070:	e59f0004 	ldr	r0, [pc, #4]	; c00007c <main+0x10>
+ c000074:	ebffffe7 	bl	c000018 <intToHexa>
+ c000078:	e3a00000 	mov	r0, #0
+ c00007c:	abef1359 	.word	0xabef1359
+
+0c000080 <serial_init>:
+ c000080:	e3a0361d 	mov	r3, #30408704	; 0x1d00000
+ c000084:	e3a02003 	mov	r2, #3
+ c000088:	e5832000 	str	r2, [r3]
+ c00008c:	e3a02005 	mov	r2, #5
+ c000090:	e5832004 	str	r2, [r3, #4]
+ c000094:	e3a02022 	mov	r2, #34	; 0x22
+ c000098:	e5832028 	str	r2, [r3, #40]	; 0x28
+ c00009c:	e12fff1e 	bx	lr
+
+0c0000a0 <serial_putc>:
+ c0000a0:	e3a0261d 	mov	r2, #30408704	; 0x1d00000
+ c0000a4:	e5923010 	ldr	r3, [r2, #16]
+ c0000a8:	e3130002 	tst	r3, #2
+ c0000ac:	0afffffc 	beq	c0000a4 <serial_putc+0x4>
+ c0000b0:	e3a0361d 	mov	r3, #30408704	; 0x1d00000
+ c0000b4:	e5830020 	str	r0, [r3, #32]
+ c0000b8:	e12fff1e 	bx	lr
+
+0c0000bc <serial_getc>:
+ c0000bc:	e3a0261d 	mov	r2, #30408704	; 0x1d00000
+ c0000c0:	e5923010 	ldr	r3, [r2, #16]
+ c0000c4:	e3130001 	tst	r3, #1
+ c0000c8:	0afffffc 	beq	c0000c0 <serial_getc+0x4>
+ c0000cc:	e3a0361d 	mov	r3, #30408704	; 0x1d00000
+ c0000d0:	e5930024 	ldr	r0, [r3, #36]	; 0x24
+ c0000d4:	e20000ff 	and	r0, r0, #255	; 0xff
+ c0000d8:	e12fff1e 	bx	lr
+
+0c0000dc <serial_puts>:
+ c0000dc:	e3510000 	cmp	r1, #0
+ c0000e0:	e92d0030 	push	{r4, r5}
+ c0000e4:	da00000e 	ble	c000124 <serial_puts+0x48>
+ c0000e8:	e2411001 	sub	r1, r1, #1
+ c0000ec:	e1a05801 	lsl	r5, r1, #16
+ c0000f0:	e1a05825 	lsr	r5, r5, #16
+ c0000f4:	e3a0261d 	mov	r2, #30408704	; 0x1d00000
+ c0000f8:	e2855001 	add	r5, r5, #1
+ c0000fc:	e3a01000 	mov	r1, #0
+ c000100:	e1a04002 	mov	r4, r2
+ c000104:	e7d0c001 	ldrb	ip, [r0, r1]
+ c000108:	e5923010 	ldr	r3, [r2, #16]
+ c00010c:	e3130002 	tst	r3, #2
+ c000110:	0afffffc 	beq	c000108 <serial_puts+0x2c>
+ c000114:	e2811001 	add	r1, r1, #1
+ c000118:	e1510005 	cmp	r1, r5
+ c00011c:	e584c020 	str	ip, [r4, #32]
+ c000120:	1afffff7 	bne	c000104 <serial_puts+0x28>
+ c000124:	e8bd0030 	pop	{r4, r5}
+ c000128:	e12fff1e 	bx	lr

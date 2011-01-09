@@ -1,0 +1,82 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+ram              0x000000000c000000 0x0000000000800000
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+
+.text           0x000000000c000000       0xdc
+ *(.text)
+ .text          0x000000000c000000       0x1c fibo.o
+                0x000000000c000000                intToHexa
+                0x000000000c000004                nibbleToAscii
+ .text          0x000000000c00001c       0x14 main.o
+                0x000000000c00001c                main
+ .text          0x000000000c000030       0xac uart_api.o
+                0x000000000c000030                serial_init
+                0x000000000c000050                serial_putc
+                0x000000000c00006c                serial_getc
+                0x000000000c00008c                serial_puts
+
+.glue_7         0x0000000000000000        0x0
+ .glue_7        0x0000000000000000        0x0 linker stubs
+
+.glue_7t        0x0000000000000000        0x0
+ .glue_7t       0x0000000000000000        0x0 linker stubs
+
+.vfp11_veneer   0x0000000000000000        0x0
+ .vfp11_veneer  0x0000000000000000        0x0 linker stubs
+
+.v4_bx          0x0000000000000000        0x0
+ .v4_bx         0x0000000000000000        0x0 linker stubs
+
+.data           0x000000000c0000dc        0x0
+ *(.data)
+ .data          0x000000000c0000dc        0x0 fibo.o
+ .data          0x000000000c0000dc        0x0 main.o
+ .data          0x000000000c0000dc        0x0 uart_api.o
+ *(*rodata*)
+
+.bss            0x000000000c0000dc        0x0
+ *(.bss)
+ .bss           0x000000000c0000dc        0x0 fibo.o
+ .bss           0x000000000c0000dc        0x0 main.o
+ .bss           0x000000000c0000dc        0x0 uart_api.o
+ *(COMMON)
+                0x0000000000000000                size_data = SIZEOF (.data)
+                0x0000000000000000                size_bss = SIZEOF (.bss)
+LOAD fibo.o
+LOAD main.o
+LOAD uart_api.o
+OUTPUT(hello elf32-littlearm)
+
+.comment        0x0000000000000000       0x11
+ .comment       0x0000000000000000       0x11 fibo.o
+                                         0x12 (size before relaxing)
+ .comment       0x0000000000000000       0x12 main.o
+ .comment       0x0000000000000000       0x12 uart_api.o
+
+.ARM.attributes
+                0x0000000000000000       0x30
+ .ARM.attributes
+                0x0000000000000000       0x30 fibo.o
+ .ARM.attributes
+                0x0000000000000030       0x30 main.o
+ .ARM.attributes
+                0x0000000000000060       0x30 uart_api.o
+
+Cross Reference Table
+
+Symbol                                            File
+intToHexa                                         fibo.o
+                                                  main.o
+main                                              main.o
+nibbleToAscii                                     fibo.o
+serial_getc                                       uart_api.o
+serial_init                                       uart_api.o
+                                                  main.o
+serial_putc                                       uart_api.o
+serial_puts                                       uart_api.o
