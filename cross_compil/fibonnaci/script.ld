@@ -1,10 +1,12 @@
+
 MEMORY {
-  ram : ORIGIN = 0x0C000000, LENGTH = 8M
+  ram : ORIGIN = 0x0c000000, LENGTH = 8M
 }
 
 SECTIONS
 {
   .text : { 
+    crt0.o(.text)
     *(.text) 
   } > ram
 
