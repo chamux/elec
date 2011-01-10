@@ -2,10 +2,10 @@
 
 void wait100ms()
 {
-  TCFG1 = TCFG1 | 0x3000;						//divide by 16 MCLK
-  TCON = TCON | 0x20000;						//manual update on
+  TCFG1 = (TCFG1 & 0xfff0fff) | 0x0003000;						//divide by 16 MCLK
   TCNTB3 = count_begin_100;					//load timer 3 with count_begin
-  TCON = (TCON & 0xdffff) | 0x10000;		//manual update off and start
+  TCON = TCON | 0x0020000;						//manual update on
+  TCON = (TCON & 0xffdffff) | 0x0010000;		//manual update off and start
   while(TCNTO3 != 0);
 
 }
