@@ -1,13 +1,8 @@
-#include "uart_api.h"
+#include "led.h"
 
-//int main() __attribute__((naked));
-
-int main() {
-  
-  serial_init();
-  //serial_putc('A');
-  while(1)
-	  serial_putc(serial_getc());
+int main() 
+{
+  chenillard();
 
   return 0; //EXIT_SUCCESS
 }

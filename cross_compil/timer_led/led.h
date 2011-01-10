@@ -1,10 +1,13 @@
 #ifndef LED_H
 #define LED_H
 
-#define ON 1
-#define OFF 0
+#define ON (short)1
+#define OFF (short)0
 
-void switchOn(short ledNb);
-void switchOff(short ledNb);
+void switchOnOff(unsigned short ledNb, short state);
+
+void switchAllOnState(short state);
+
+void chenillard();
 
 #endif

@@ -1,7 +1,7 @@
 PREFIX = arm-none-eabi-
 LDSCRIPT = script.ld
 CC = $(PREFIX)gcc
-CFLAGS = -c -Werror -Wall -g -O2 
+CFLAGS = -c -Werror -Wall -g
 
 LD = $(PREFIX)ld
 LDFLAGS = -cref -M > $(EXE).map -T $(LDSCRIPT)
@@ -16,7 +16,7 @@ OBJ += $(patsubst %.s,%.o,$(SRCS))
 EXE = led
 
 
-all: $(EXE) dump
+all: Makefile $(EXE) dump
 
 compile: $(OBJ)
 

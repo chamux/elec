@@ -1,6 +1,6 @@
 /* Definition des parametres dont vous avez besoin */
         .SET  rPDATC,0x1d20014 @ Adresse du port C
-	.SET rPDATD, 0x1d2002c @Adresse du port E
+	.SET rPDATD, 0x1d2002c @ Adresse du port E
 
 main: .global main
 	ldr r0,=0xFFFFF     	@ valeur a atteindre pour le wait		
