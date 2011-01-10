@@ -32,7 +32,7 @@ void wait1s()
 {
   int i;
   for(i = 0; i < 100; i++)
-	 wait(100ms);
+	 wait(100);
 }
 
 
