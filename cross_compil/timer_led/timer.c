@@ -68,9 +68,5 @@ void bip()
   PCONE |= 0x02000;		//put TOUT3 on PE6
 
   while(1)
-  {
     waitInverter(1);
-  }
-
-
 }
