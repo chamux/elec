@@ -9,7 +9,7 @@
 #define TCFG1 (*(volatile unsigned long *) 0x01d50004) 		//To configure divider value
 #define PCONE (*(volatile unsigned long *) 0x01d20028) 		//[13:12] <= 10 to put TOUT3 on PE6
 
-#define count_begin_100 41250
+#define count_begin_100 20625
 #define count_begin_1 8250
 
 
