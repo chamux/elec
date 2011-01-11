@@ -12,10 +12,11 @@
 #define count_begin_100 20625
 #define count_begin_1 8250
 
-
+void init_timer3(	unsigned long rTCFG1,
+	 					unsigned long rTCFG0,
+						unsigned long rTCNTB3);
 void wait100ms();
 void wait(unsigned long time);
-void wait1s();
 void wait1ms();
 void bip();
 
