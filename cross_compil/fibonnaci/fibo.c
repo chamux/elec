@@ -58,7 +58,7 @@ void fibo(short n)
 	for(i = 0; i < n; i++)
 	{
 		intToDeci(u0);
-		serial_putc('\n');
+		serial_puts("\n\r",2);
 		aux = u1;
 	     	u1 += u0;
 		u0 = aux;
