@@ -15,9 +15,14 @@ OBJ += $(patsubst %.s,%.o,$(SRCS))
 
 EXE = test
 
-all: Makefile $(EXE) $(EXE).lst
+all: Makefile $(EXE) $(EXE).lst $(EXE).hex
 
 compile: $(OBJ)
+
+transmit: $(EXE).hex
+	cat $< > /dev/ttyS0
+
+
 
 $(EXE): $(OBJ) 
 	$(LD) $(LDFLAGS) $^ -o $@
@@ -25,5 +30,8 @@ $(EXE): $(OBJ)
 %.lst: $(EXE) $(LDSCRIPT)
 	$(PREFIX)objdump -d $< > $@
 
+%.hex: $(EXE)
+	 $(PREFIX)objcopy --input-target=elf32-littlearm --output-target=binary $< $@  
+
 clean:
-	rm -f *~ $(OBJ) $(EXE).map $(EXE).lst $(EXE) *.swp 
+	rm -f *~ $(OBJ) $(EXE).map $(EXE).lst $(EXE).hex $(EXE) *.swp 
