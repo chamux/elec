@@ -1,5 +1,4 @@
 #include "uart_api.h"
-#include "timer.h"
 
 #define UTRSTAT0 (*(volatile unsigned long *)0x01D00010)
 #define UTXH0    (*(volatile unsigned long *)0x01D00020)   //when the endian mode is Little Endian
@@ -35,7 +34,6 @@ void serial_putc(char c){
 char serial_getc(){
 
   while(!(UTRSTAT0 & 0x01));
-  serial_putc(URXH0);// to see what is typed in minicom
   return URXH0; 
 }
 
@@ -48,15 +46,4 @@ void serial_puts(char * s, short length){
     s++;
     length--;
   }
-}
-
-signed char serial_getcWithTimer()
-{
-  init_timer3(0x0003000, 0x000ff00, 52000, 0);
-  TCON |= 0x10000;
-
-  while( (!(UTRSTAT0 & 0x01)) && TCNTO3);
-
-  return (UTRSTAT0 & 0x01)?URXH0:-1; 
-
 }

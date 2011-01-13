@@ -13,7 +13,8 @@ SRCS = $(wildcard *.s)
 OBJ = $(patsubst %.c,%.o,$(SRCC))
 OBJ += $(patsubst %.s,%.o,$(SRCS))
 
-EXE = boot
+EXE = fibo_sub
+
 
 all: Makefile $(EXE) $(EXE).lst
 

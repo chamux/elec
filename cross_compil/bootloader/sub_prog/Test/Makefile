@@ -13,7 +13,7 @@ SRCS = $(wildcard *.s)
 OBJ = $(patsubst %.c,%.o,$(SRCC))
 OBJ += $(patsubst %.s,%.o,$(SRCS))
 
-EXE = boot
+EXE = test
 
 all: Makefile $(EXE) $(EXE).lst
 

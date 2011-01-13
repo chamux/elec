@@ -3,13 +3,13 @@
 
 int main() 
 {
-  //chenillard();
+  chenillard();
   while(1) {
 	 /*switchOnOff((unsigned short)1, OFF);
 	 wait(1000);
 	 switchOnOff((unsigned short)1, ON);
 	 wait(1000);*/
-	 bip();
+    // bip();
   }
 
   return 0; //EXIT_SUCCESS

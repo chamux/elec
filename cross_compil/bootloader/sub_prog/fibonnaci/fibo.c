@@ -1,8 +1,7 @@
 #include "uart_api.h"
-#include "convert.h"
+#include "fibo.h"
 
-inline char nibbleToAscii(unsigned char byte);
-inline unsigned long asciiToNibble(char charac);
+char nibbleToAscii(unsigned char byte);
 
 void intToHexa(unsigned long nb)
 {
@@ -57,24 +56,16 @@ void intToDeci(unsigned long nb)
   serial_puts(out+lastZero,10-lastZero);
 }
 
-
-
-
-unsigned long asciiToHex(char * receive)
+void fibo(short n)
 {
-
-  unsigned short i;
-  unsigned long hex = 0;
-  for(i=0; i< 8; i++)
+  long u0=0, u1=1, aux;
+  short i;
+  for(i = 0; i < n; i++)
   {
-	 hex = hex*16 + asciiToNibble(receive[i]);
+    intToDeci(u0);
+    serial_puts("\n\r",2);
+    aux = u1;
+    u1 += u0;
+    u0 = aux;
   }
-  return hex;
-
 }
-
-inline unsigned long asciiToNibble(char charac)
-{
-  return (charac > 57) ? charac - 87 : charac - 48;
-}
-

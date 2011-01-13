@@ -41,7 +41,7 @@ void wait100ms(unsigned long inverter)
 					count_begin_100,
 					inverter);
   TCON |= 0x0010000;		            //start
-  while(TCNTO3 != 0);
+  while(TCNTO3);
 
 }
 
@@ -70,3 +70,4 @@ void bip()
   while(1)
     waitInverter(1);
 }
+
