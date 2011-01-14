@@ -9,6 +9,6 @@ char serial_getc();
 
 void serial_puts(char * s, short length);
 
-signed char serial_getcWithTimer();
+short serial_getcWithTimer(char * charac);
 
 #endif

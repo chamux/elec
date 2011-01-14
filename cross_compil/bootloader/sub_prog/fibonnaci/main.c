@@ -4,7 +4,7 @@
 int main() 
 {
   
-  serial_init();
+  //  serial_init();
 
   //intToHexa((long)0xABEF1359);
   //serial_putc('\n');

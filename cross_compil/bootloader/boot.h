@@ -8,7 +8,7 @@ extern char _ram_beginnig_, _ram_end_, _bss_end_;
 void mainBoot();
 unsigned long getAddress();
 inline unsigned short testAddress(unsigned long addr);
-void storeBytes(unsigned long *addr);
+void storeBytes(unsigned char *addr);
 
 
 #endif

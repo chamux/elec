@@ -11,7 +11,7 @@
 #define UBRDIV0  (*(volatile unsigned long *)0x01D00028)
 #define UFCON0   (*(volatile unsigned long *)0x01D0008)
 
-#define bps      9600
+#define bps      115200
 #define MCLK     66000000
 
 
@@ -38,7 +38,6 @@ void serial_putc(char c){
 char serial_getc(){
 
   while(!(UTRSTAT0 & 0x01));
-  // serial_putc(URXH0);// to see what is typed in minicom
   return URXH0; 
 }
 
@@ -53,13 +52,16 @@ void serial_puts(char * s, short length){
   }
 }
 
-signed char serial_getcWithTimer()
+short serial_getcWithTimer(char * charac)
 {
+  short test;
+
   init_timer3(0x0003000, 0x000ff00, 52000, 0);
   TCON |= 0x10000;
 
   while( (!(UTRSTAT0 & 0x01)) && TCNTO3);
 
-  return (UTRSTAT0 & 0x01)?URXH0:-1; 
-
+  test=UTRSTAT0 & 0x01;
+  *charac=test?URXH0:-1; 
+  return test;
 }

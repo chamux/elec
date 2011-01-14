@@ -33,7 +33,7 @@ int main()
 			addr = getAddress();
 
 			if(testAddress(addr))
-				storeBytes((unsigned long *) addr);
+				storeBytes((unsigned char *) addr);
 			else
 				switchOnOff(4,ON);
 
@@ -86,41 +86,20 @@ inline unsigned short testAddress(unsigned long addr)
 }
 
 
-void storeBytes(unsigned long * addr)
+void storeBytes(unsigned char * addr)
 {
-	unsigned long temp;
-	signed char getReturn;
-	short i;
-
-	serial_puts("\n\rData.. (you have 1 second)\n\r",30);
+	char getReturn;
 
 	while((unsigned long)addr>BSS_END)
 	{
-		for(i=0 ; i<4 ; i++)
+
+		if(!serial_getcWithTimer(&getReturn))
 		{
-			getReturn=serial_getcWithTimer();
-
-//DEBUG
-			serial_putc(getReturn);
-			serial_puts("\n\r",2);
-//END_DEBUG
-
-			if(getReturn==-1)
-				break;
-
-			temp=(temp<<8)+getReturn;
-		}
-		if(getReturn==-1)
-		{
-			if(i)
-				*addr=temp;
 			serial_puts("Time OUT\n\n\r",11);
 			break;
 		}
 
-	  
-		*addr=temp;
+		*addr=getReturn;
 		addr++;
-		temp=0;
 	}
 }
