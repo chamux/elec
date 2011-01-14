@@ -88,12 +88,11 @@ inline unsigned short testAddress(unsigned long addr)
 
 void storeBytes(unsigned long * addr)
 {
-	//switchOnOff(2, ON);
 	unsigned long temp;
 	signed char getReturn;
 	short i;
 
-	serial_puts("Data in : 4 characters.. (you have 1 second)\n\r",46);
+	serial_puts("\n\rData.. (you have 1 second)\n\r",30);
 
 	while((unsigned long)addr>BSS_END)
 	{
@@ -101,20 +100,27 @@ void storeBytes(unsigned long * addr)
 		{
 			getReturn=serial_getcWithTimer();
 
+//DEBUG
+			serial_putc(getReturn);
+			serial_puts("\n\r",2);
+//END_DEBUG
+
 			if(getReturn==-1)
 				break;
 
 			temp=(temp<<8)+getReturn;
 		}
-	        if(getReturn==-1)
+		if(getReturn==-1)
 		{
+			if(i)
+				*addr=temp;
 			serial_puts("Time OUT\n\n\r",11);
 			break;
 		}
-					
+
+	  
 		*addr=temp;
 		addr++;
+		temp=0;
 	}
-
-	//switchOnOff(2, OFF);
 }

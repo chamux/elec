@@ -9,8 +9,9 @@
 #define ULCON0   (*(volatile unsigned long *)0x01D00000)
 #define UCON0    (*(volatile unsigned long *)0x01D00004)
 #define UBRDIV0  (*(volatile unsigned long *)0x01D00028)
+#define UFCON0   (*(volatile unsigned long *)0x01D0008)
 
-#define bps      115200
+#define bps      9600
 #define MCLK     66000000
 
 
@@ -22,6 +23,8 @@ void serial_init(){
   UCON0 = 0x005;
   //Setting up UBRDIV0 : 
   UBRDIV0 = (int)(MCLK/(bps*16)) - 1;
+  //FIFO enabled
+  UFCON0 = 0xf1;
 }
 
 
@@ -35,7 +38,7 @@ void serial_putc(char c){
 char serial_getc(){
 
   while(!(UTRSTAT0 & 0x01));
-  serial_putc(URXH0);// to see what is typed in minicom
+  // serial_putc(URXH0);// to see what is typed in minicom
   return URXH0; 
 }
 

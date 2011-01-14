@@ -20,6 +20,8 @@ all: Makefile $(EXE) $(EXE).lst $(EXE).hex
 compile: $(OBJ)
 
 transmit: $(EXE).hex
+	echo "L0x0c100000" > /dev/ttyS0
+	sleep 0.5ms
 	cat $< > /dev/ttyS0
 
 
@@ -35,3 +37,9 @@ $(EXE): $(OBJ)
 
 clean:
 	rm -f *~ $(OBJ) $(EXE).map $(EXE).lst $(EXE).hex $(EXE) *.swp 
+
+
+debug: 
+	echo "L0x0c100000" > /dev/ttyS0
+	sleep 0.5s
+	echo "01234567890123456789" > /dev/ttyS0
