@@ -56,7 +56,21 @@ short serial_getcWithTimer(char * charac)
 {
   short test;
 
-  init_timer3(0x0003000, 0x000ff00, 52000, 0);
+  init_timer3(0x0003000, 0x000ff00, 16113, 0);
+  TCON |= 0x10000;
+
+  while( (!(UTRSTAT0 & 0x01)) && TCNTO3);
+
+  test=UTRSTAT0 & 0x01;
+  *charac=test?URXH0:-1; 
+  return test;
+}
+
+short serial_getcWithTimer5s(char * charac)
+{
+  short test;
+
+  init_timer3(0x0004000, 0x000c700, 51562, 0);
   TCON |= 0x10000;
 
   while( (!(UTRSTAT0 & 0x01)) && TCNTO3);
