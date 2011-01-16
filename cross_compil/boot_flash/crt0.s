@@ -190,6 +190,7 @@ _start:
   ldr r13,=0x0c7ffffc
    
    bl fill_bss
+   bl copy_data_ram
    bl main
 stop:
     b stop
