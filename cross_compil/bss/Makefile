@@ -1,7 +1,7 @@
 PREFIX = arm-none-eabi-
 LDSCRIPT = script.ld
 CC = $(PREFIX)gcc
-CFLAGS = -c -Werror -Wall -g -O2 
+CFLAGS = -c -Werror -Wall -g
 
 LD = $(PREFIX)ld
 LDFLAGS = -cref -M > $(EXE).map -T $(LDSCRIPT)
@@ -13,18 +13,17 @@ SRCS = $(wildcard *.s)
 OBJ = $(patsubst %.c,%.o,$(SRCC))
 OBJ += $(patsubst %.s,%.o,$(SRCS))
 
-EXE = hello
+EXE = bss
 
-
-all: $(EXE) dump
+all: $(EXE) $(EXE).lst
 
 compile: $(OBJ)
 
-$(EXE): $(OBJ) 
-	$(LD) $(LDFLAGS) $^ -o $@
+$(EXE): $(OBJ) $(LDSCRIPT) Makefile
+	$(LD) $(LDFLAGS) $(OBJ) -o $@
 
-dump: $(EXE) $(LDSCRIPT)
-	$(PREFIX)objdump -d $< > $<.lst
+%.lst: $(EXE) $(LDSCRIPT) Makefile
+	$(PREFIX)objdump -d $< > $@
 
 clean:
 	rm -f *~ $(OBJ) $(EXE).map $(EXE).lst $(EXE) *.swp 

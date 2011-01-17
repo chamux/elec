@@ -1,9 +1,10 @@
 .global _start
+.global _exit
 _start:
-
    ldr r13,=0x0c7ffffc
    bl main
-exit:
+_exit:
    ldr r0,=0xdeeedeee
-	@str r0, [pc,#-8]
-	b exit	
+   str r0, [pc,#4]
+   nop
+   nop

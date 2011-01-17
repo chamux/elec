@@ -15,14 +15,14 @@ OBJ += $(patsubst %.s,%.o,$(SRCS))
 
 EXE = boot
 
-all: Makefile $(EXE) $(EXE).lst
+all: $(EXE) $(EXE).lst
 
 compile: $(OBJ)
 
-$(EXE): $(OBJ) 
-	$(LD) $(LDFLAGS) $^ -o $@
+$(EXE): $(OBJ) $(LDSCRIPT) Makefile
+	$(LD) $(LDFLAGS) $(OBJ) -o $@
 
-%.lst: $(EXE) $(LDSCRIPT)
+%.lst: $(EXE) $(LDSCRIPT) Makefile
 	$(PREFIX)objdump -d $< > $@
 
 clean:

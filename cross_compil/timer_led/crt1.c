@@ -1,10 +1,6 @@
 extern char _bss_beginning_;
 extern char _bss_end_;
 
-int test;
-long bouh;
-int grr;
-
 void fill_bss()
 {
   char* dst;

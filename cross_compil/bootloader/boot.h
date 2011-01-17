@@ -3,7 +3,7 @@
 
 #define STACK_END 0x0cefffff
 #define BSS_END (unsigned long)& _bss_end_
-extern char _ram_beginnig_, _ram_end_, _bss_end_;
+extern char _bss_end_;
 
 void mainBoot();
 unsigned long getAddress();

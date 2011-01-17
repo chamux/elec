@@ -3,9 +3,7 @@
 
 #define UTRSTAT0 (*(volatile unsigned long *)0x01D00010)
 #define UTXH0    (*(volatile unsigned long *)0x01D00020)   //when the endian mode is Little Endian
-//#define UTXH0    0x01D00023;   //when the endian mode is Big Endian
 #define URXH0    (*(volatile unsigned long *)0x01D00024)   //when the endian mode is Little Endian
-//#define URXH0    0x01D00027;   //when the endian mode is Big Endian
 #define ULCON0   (*(volatile unsigned long *)0x01D00000)
 #define UCON0    (*(volatile unsigned long *)0x01D00004)
 #define UBRDIV0  (*(volatile unsigned long *)0x01D00028)
@@ -50,6 +48,11 @@ void serial_puts(char * s, short length){
     s++;
     length--;
   }
+}
+
+inline void serial_newLine()
+{
+  serial_puts("\n\r",2);
 }
 
 short serial_getcWithTimer(char * charac)

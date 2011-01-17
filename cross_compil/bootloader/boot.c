@@ -10,13 +10,13 @@ int main()
 	unsigned long addr;
 
 	serial_init();
-	serial_puts("\n\n\rBOOTLOADER IS SPEAKING !!\n\r",30); 
+	serial_puts("\n\n\rBOOTLOADER by Bertrand & Samuel\n\r",36); 
 	switchAllOnState(OFF);
  
 	while(1)
 	{
 		serial_puts("\tL<addr> : data at addr in\n\r",28);
-		serial_puts("\tG<addr> : exec at addr in\n\r",28);		
+		serial_puts("\tG<addr> : exec at addr in\n\r",28);
 		serial_puts("\tR<addr> : display addr in\n\r",28);
 		serial_puts("\t <addr> : 0x........\n\n\r",25);
 
@@ -57,7 +57,6 @@ int main()
 			serial_puts("\n\r",2);
 			break;
 		}
-// end of  bootloader jeudi 13 janvier 2011, 17:30:51 (UTC+0100)
 	}
 	return 0;
 }
@@ -72,9 +71,7 @@ unsigned long getAddress()
 	{
 		receive[i] = serial_getc();
 	}
-	//TODO address without starting zero
 	return ((receive[0] == '0') & (receive[1] == 'x')) ? asciiToHex(receive + 2) : 0;
-
 }
 
 

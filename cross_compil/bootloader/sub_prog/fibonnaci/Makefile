@@ -6,6 +6,8 @@ CFLAGS = -c -Werror -Wall -g
 LD = $(PREFIX)ld
 LDFLAGS = -cref -M > $(EXE).map -T $(LDSCRIPT)
 
+XFLAG=--input-target=elf32-littlearm --output-target=binary
+
 ASFLAGS = -g -mcpu=arm7tdmi
 AS = $(PREFIX)as
 SRCC = $(wildcard *.c)
@@ -13,29 +15,24 @@ SRCS = $(wildcard *.s)
 OBJ = $(patsubst %.c,%.o,$(SRCC))
 OBJ += $(patsubst %.s,%.o,$(SRCS))
 
-EXE = fibo_boot
+EXE = fibo
 
-all: Makefile $(EXE) $(EXE).lst $(EXE).hex
+all: $(EXE) $(EXE).lst
 
 compile: $(OBJ)
 
-transmit: $(EXE).hex
+program: $(EXE).hex
 	echo -n "L0x0c100000" > /dev/ttyS0
-	sleep 0.1s
 	cat $< > /dev/ttyS0
 
+%.hex: $(EXE)
+	 $(PREFIX)objcopy $(XFLAG) $< $@  
 
+$(EXE): $(OBJ) $(LDSCRIPT) Makefile
+	$(LD) $(LDFLAGS) $(OBJ) -o $@
 
-$(EXE): $(OBJ) 
-	$(LD) $(LDFLAGS) $^ -o $@
-
-%.lst: $(EXE) $(LDSCRIPT)
+%.lst: $(EXE) $(LDSCRIPT) Makefile
 	$(PREFIX)objdump -d $< > $@
 
-%.hex: $(EXE)
-	 $(PREFIX)objcopy --input-target=elf32-littlearm --output-target=binary $< $@  
-
 clean:
-	rm -f *~ $(OBJ) $(EXE).map $(EXE).lst $(EXE).hex $(EXE) *.swp 
-
-
+	rm -f *~ $(OBJ) $(EXE).map $(EXE).lst $(EXE) *.swp 

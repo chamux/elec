@@ -8,19 +8,11 @@ void intToHexa(unsigned long nb)
 {
   short i;
   unsigned char byte;
-  unsigned short first_non_zero = 0;
 
   for(i=3 ; i>=0 ; i--)
   {
     byte=nb>>(unsigned short)8*i;
     nb-=byte<<(unsigned short)8*i;
-
-    if(!(first_non_zero == 0 && byte == 0))
-    {
-      serial_putc(nibbleToAscii(byte>>4));
-      serial_putc(nibbleToAscii(byte&0x0F));
-      first_non_zero = 1;
-    }
   }
 }
 
@@ -56,9 +48,6 @@ void intToDeci(unsigned long nb)
 
   serial_puts(out+lastZero,10-lastZero);
 }
-
-
-
 
 unsigned long asciiToHex(char * receive)
 {

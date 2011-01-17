@@ -47,3 +47,8 @@ void serial_puts(char * s, short length){
     length--;
   }
 }
+
+inline void serial_newLine()
+{
+  serial_puts("\n\r",2);
+}
