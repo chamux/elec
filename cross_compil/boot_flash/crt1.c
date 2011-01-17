@@ -5,10 +5,6 @@ extern char _data_beginning_flash_;
 extern char _data_beginning_ram_;
 extern char _data_end_ram_;
 
-int test;
-long bouh;
-int grr;
-
 void fill_bss()
 {
   char* dst;
@@ -25,5 +21,4 @@ void copy_data_ram()
   {
     *dst++ = *src++; 
   }
-
 }

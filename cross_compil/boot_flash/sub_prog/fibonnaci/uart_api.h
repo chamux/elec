@@ -9,4 +9,6 @@ char serial_getc();
 
 void serial_puts(char * s, short length);
 
+inline void serial_newLine();
+
 #endif

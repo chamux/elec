@@ -1,9 +1,36 @@
 .global _start
+
+     b  _start
+    ldr pc, REMAPED_UNDEFINED_INSTRUCTION
+    ldr pc, REMAPED_SOFTWARE_INTERRUPT
+    ldr pc, REMAPED_PREFETCH_ABORT
+    ldr pc, REMAPED_DATA_ABORT
+    ldr pc, REMAPED_NOT_USED
+    ldr pc, REMAPED_IRQ
+    ldr pc, REMAPED_FIQ
+
+    .balignl 16,0xdeadbeef
+
+REMAPED_UNDEFINED_INSTRUCTION:
+    .word 0x0c000004
+REMAPED_SOFTWARE_INTERRUPT:
+    .word 0x0c000008
+REMAPED_PREFETCH_ABORT:
+    .word 0x0c00000c
+REMAPED_DATA_ABORT:
+    .word 0x0c000010
+REMAPED_NOT_USED:
+    .word 0x0c000014
+REMAPED_IRQ:
+    .word 0x0c000018
+REMAPED_FIQ:
+    .word 0x0c00001c
+
 _start:
 
   @CPSR
-  ldr r0,=0x800000d3
-  msr cpsr,r0
+  @ldr r0,=0x800000d3
+  @msr cpsr,r0
 
 
   @WTCON
@@ -181,16 +208,13 @@ _start:
   ldr r1,=0x00000020
   str r1, [r0]
   @end of memory init
-  @--------------------------
+  @-------------------------
+	
+	
+  ldr r13,=0x0c7ffffc  @stack pointer
+  bl fill_bss
+  bl copy_data_ram
+  bl main
 
 
-
-   
-  @stack pointer
-  ldr r13,=0x0c7ffffc
-   
-   bl fill_bss
-   bl copy_data_ram
-   bl main
-stop:
-    b stop
+	

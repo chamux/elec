@@ -5,9 +5,7 @@
 #define OFF (short)0
 
 void switchOnOff(unsigned short ledNb, short state);
-
 void switchAllOnState(short state);
-
 void chenillard();
 
 #endif

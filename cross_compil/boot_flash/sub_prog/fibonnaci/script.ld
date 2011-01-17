@@ -1,5 +1,6 @@
+
 MEMORY {
-  ram : ORIGIN = 0x0c100000, LENGTH = 7M
+  ram : ORIGIN = 0x0c100000, LENGTH = 8M
 }
 
 SECTIONS
@@ -14,13 +15,9 @@ SECTIONS
     *(*rodata*)
   } > ram
 
-  _bss_beginning_ = .;
-
   .bss : {
     *(.bss) *(COMMON)
   } > ram
-
-  _bss_end_ = .;
 
   size_data = SIZEOF(.data);
   size_bss = SIZEOF(.bss);

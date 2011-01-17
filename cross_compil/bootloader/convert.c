@@ -13,6 +13,9 @@ void intToHexa(unsigned long nb)
   {
     byte=nb>>(unsigned short)8*i;
     nb-=byte<<(unsigned short)8*i;
+
+    serial_putc(nibbleToAscii(byte>>4));
+    serial_putc(nibbleToAscii(byte&0x0F));
   }
 }
 

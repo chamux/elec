@@ -1,7 +1,7 @@
 .global _start
+.global _exit
 _start:
-
-   bl fill_bss
    bl main
-stop:
-   mov pc,#0x0c000000
+_exit:
+   ldr pc,=0x0
+
