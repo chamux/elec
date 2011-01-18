@@ -7,7 +7,11 @@ void serial_putc(char c);
 
 char serial_getc();
 
-void serial_puts(char * s, short length);
+void serial_puts(char * s);
+
+short serial_getcWithTimer(char * charac);
+
+short serial_getcWithTimer5s(char * charac);
 
 inline void serial_newLine();
 

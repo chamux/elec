@@ -2,8 +2,7 @@
 
 int main() 
 {
-  fibo(10);
-
+  fibo(20);
   return 0; //EXIT_SUCCESS
 }
 

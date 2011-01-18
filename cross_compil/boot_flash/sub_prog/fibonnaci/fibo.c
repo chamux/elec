@@ -32,7 +32,8 @@ char nibbleToAscii(unsigned char byte)
 void intToDeci(unsigned long nb)
 {
   short i,lastZero=0;
-  char out[10];
+  char out[11];
+  out[10]='\0';
 
   for(i=9; i>=0 ; i--)
   {
@@ -48,7 +49,7 @@ void intToDeci(unsigned long nb)
   }
   lastZero+=lastZero!=9;
 
-  serial_puts(out+lastZero,10-lastZero);
+  serial_puts(out+lastZero);
 }
 
 void fibo(short n)
@@ -63,4 +64,5 @@ void fibo(short n)
     u1 += u0;
     u0 = aux;
   }
+  serial_newLine();
 }

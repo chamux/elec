@@ -9,12 +9,12 @@
 #define UBRDIV0  (*(volatile unsigned long *)0x01D00028)
 #define UFCON0   (*(volatile unsigned long *)0x01D0008)
 
-#define bps      9600
+#define bps      115200
 #define MCLK     66000000
 
 
-void serial_init(){
-
+void serial_init()
+{
   //Setting up of ULCON0 : normal mode, no parity, one stop bit, word length = 8bits 
   ULCON0 = 0x03;
   //Setting up of UCON0 : polling mode
@@ -26,33 +26,33 @@ void serial_init(){
 }
 
 
-void serial_putc(char c){
-
+void serial_putc(char c)
+{
   while(!(UTRSTAT0 & 0x02));
   UTXH0 = c;
 }
 
 
-char serial_getc(){
+char serial_getc()
+{
 
   while(!(UTRSTAT0 & 0x01));
   return URXH0; 
 }
 
 
-void serial_puts(char * s, short length){
-  
-  while(length>0)
+void serial_puts(char * s)
+{
+  while(*s)
   {
     serial_putc(*s);
     s++;
-    length--;
   }
 }
 
 inline void serial_newLine()
 {
-  serial_puts("\n\r",2);
+  serial_puts("\n\r");
 }
 
 short serial_getcWithTimer(char * charac)

@@ -1,7 +1,7 @@
 PREFIX = arm-none-eabi-
 LDSCRIPT = script.ld
 CC = $(PREFIX)gcc
-CFLAGS = -c -Werror -Wall -g
+CFLAGS = -c -Werror -Wall -g -O2
 
 LD = $(PREFIX)ld
 LDFLAGS = -cref -M > $(EXE).map -T $(LDSCRIPT)

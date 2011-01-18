@@ -1,12 +1,12 @@
 PREFIX = arm-none-eabi-
 LDSCRIPT = script.ld
 CC = $(PREFIX)gcc
-CFLAGS = -c -Werror -Wall -g
+CFLAGS = -c -Werror -Wall -O2
 
 LD = $(PREFIX)ld
 LDFLAGS = -cref -M > $(EXE).map -T $(LDSCRIPT)
 
-ASFLAGS = -g -mcpu=arm7tdmi
+ASFLAGS = -mcpu=arm7tdmi
 AS = $(PREFIX)as
 SRCC = $(wildcard *.c)
 SRCS = $(wildcard *.s)

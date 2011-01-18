@@ -13,17 +13,17 @@ int main()
 	void (*f)(void);
 
 	serial_init();
-	serial_puts("\n\n\rBOOTLOADER by Chazot Bertrand & Mokrani Samuel !!\n\r",54); 
+	serial_puts("BOOTLOADER by Chazot Bertrand & Mokrani Samuel !!\n\r"); 
 	switchAllOnState(OFF);
 
 	while(1)
 	{
-		serial_puts("\tL<addr> : data at addr in\n\r",28);
-		serial_puts("\tG<addr> : exec at addr in\n\r",28);		
-		serial_puts("\tR<addr> : display addr in\n\r",28);
-		serial_puts("\t <addr> : 0x........\n\n\r\r",26);
+		serial_puts("\tL<addr> : data at addr in\n\r");
+		serial_puts("\tG<addr> : exec at addr in\n\r");		
+		serial_puts("\tR<addr> : display addr in\n\r");
+		serial_puts("\t <addr> : 0x........\n\n\r\r");
 
-		serial_puts("\tYou have 5 seconds to enter a character\n\r",42);
+		serial_puts("\tYou have 5 seconds to enter a character\n\r");
 
 		if(serial_getcWithTimer5s(&receive_char))
 		{
@@ -59,9 +59,9 @@ int main()
 			case 'r':
 				switchOnOff(3,ON);
 				addr = getAddress();
-				serial_puts("\n\r-> ",5);
+				serial_puts("\n\r-> ");
 				intToHexa(*(unsigned long *)addr);
-				serial_puts("\n\r",2);
+				serial_puts("\n\r");
 				switchOnOff(3,OFF);
 				break;
 			case 'c':
@@ -83,7 +83,7 @@ int main()
 		}
 		else
 		{
-			serial_puts("\t----------Jump in 0x3000----------\n\r",37);
+			serial_puts("\t------------Jump in 0x03000------------\n\r");
 			f=(void *)0x3000;
 			f();
 			break;
@@ -122,7 +122,7 @@ void storeBytes(unsigned char * addr)
 
 		if(!serial_getcWithTimer(&getReturn))
 		{
-			serial_puts("Time OUT\n\n\r",11);
+			serial_puts("Time OUT\n\n\r");
 			break;
 		}
 
