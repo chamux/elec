@@ -9,18 +9,41 @@
 #define TCFG1 (*(volatile unsigned long *) 0x01d50004) 		//To configure divider value
 #define PCONE (*(volatile unsigned long *) 0x01d20028) 		//[13:12] <= 10 to put TOUT3 on PE6
 
-#define count_begin_100 20625
-#define count_begin_1 8250
+#define COUNT_100 20625
+#define PRESC_100 0x1300
+#define DIV_100 0x3000
 
-void init_timer3(unsigned long rTCFG1,
-		 unsigned long rTCFG0,
-		 unsigned long rTCNTB3,
-		 unsigned long inverter);
-void wait100ms(unsigned long inverter);
-void wait(unsigned long time);
-void waitInverter(unsigned long time);
-void wait1ms(unsigned long inverter);
-void bip();
 
+#define COUNT_1 8250
+#define PRESC_1 0
+#define DIV_1 0x2000
+
+#define COUNT_1000 8056
+#define PRESC_1000 0xff00
+#define DIV_1000 0x4000
+
+#define COUNT_5000 51562
+#define PRESC_5000 0xc700
+#define DIV_5000 0x4000
+
+#define INVERTER 0x40000
+
+
+void init_timer3(unsigned long div,    
+		 unsigned long presc,
+		 unsigned long count);
+void wait();
+
+void bip_config(unsigned long div,    
+	 unsigned long presc,
+         unsigned long count);
+
+void bip_stop();
+
+void bip_start();
+
+void bip_end();
+
+void bip_change_count(unsigned long count);
 
 #endif

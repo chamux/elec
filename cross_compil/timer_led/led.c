@@ -6,13 +6,14 @@ void chenillard()
 {
 	unsigned short currentLed=4;
 	switchAllOnState(OFF);
+	init_timer3(DIV_1000, PRESC_1000, COUNT_1000);
 
 	while(1)
 	{
 		switchOnOff(currentLed,OFF);
 		currentLed=(currentLed%4)+1;
 		switchOnOff(currentLed,ON);
-		wait(1000);//1000*1ms
+		wait();
 	}
 }
 
