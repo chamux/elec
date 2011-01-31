@@ -1,6 +1,24 @@
 #ifndef MUSIC_H
 #define MUSIC_H
 
+typedef struct {
+  unsigned long pitch;
+  unsigned long value;
+} Note;
+
+/*************************************************/
+// Scores
+
+extern Note const clair_lune[];
+extern Note const fur_elise[];
+
+/*************************************************/
+#define STACCATO (unsigned long)50 
+// Duration of the silence between notes,no Staccato if 0
+
+/*************************************************/
+// Notes
+
 #define	RAPPORT 206250 //66000000/DIV_VAL/(PRESC+1)
 
 #define SOL0  (unsigned long) RAPPORT/196
@@ -28,11 +46,27 @@
 #define FA8   (unsigned long) RAPPORT/698
 #define FAd8  (unsigned long) RAPPORT/740
 #define SOL8  (unsigned long) RAPPORT/784
+#define MI16  (unsigned long) RAPPORT/1329
 
 #define SIL   (unsigned long) 1
 #define END   (unsigned long) 0
 
-void music();
-void play_score(unsigned long const * score, unsigned long noire);
+/*************************************************/
+// value
+
+#define TEMPO 4028
+
+#define RONDE    (unsigned long)TEMPO*4
+#define BLANCHEP (unsigned long)TEMPO*3
+#define BLANCHE  (unsigned long)TEMPO*2
+#define NOIREP   (unsigned long)TEMPO*1.5
+#define NOIRE    (unsigned long)TEMPO
+#define CROCHE   (unsigned long)TEMPO/2
+#define DOUBLE   (unsigned long)TEMPO/4
+
+/*************************************************/
+
+void musical_keyboard();
+void play_score(Note const * score);
 
 #endif
