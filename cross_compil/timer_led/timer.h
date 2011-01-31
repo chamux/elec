@@ -1,6 +1,7 @@
 #ifndef TIMER_H
 #define TIMER_H
 
+//Timer3 : bip
 #define TCNTB3 (*(volatile unsigned long *) 0x01d50030) 
 #define TCMPB3 (*(volatile unsigned long *) 0x01d50034) 	//TCNTB3 is compared to this value
 #define TCON (*(volatile unsigned long *) 0x01d50008) 		//Setting-up of Timer
@@ -8,6 +9,10 @@
 #define TCFG0 (*(volatile unsigned long *) 0x01d50000) 		//To configure prescaler value
 #define TCFG1 (*(volatile unsigned long *) 0x01d50004) 		//To configure divider value
 #define PCONE (*(volatile unsigned long *) 0x01d20028) 		//[13:12] <= 10 to put TOUT3 on PE6
+
+//Timer0 : wait
+#define TCNTB0 (*(volatile unsigned long *) 0x01d5000c) 
+#define TCNTO0 (*(volatile unsigned long *) 0x01d50014)
 
 #define COUNT_100 20625
 #define PRESC_100 0x1300
@@ -29,10 +34,12 @@
 #define INVERTER 0x40000
 
 
-void init_timer3(unsigned long div,    
+void init_timer0(unsigned long div,    
 		 unsigned long presc,
 		 unsigned long count);
+
 void wait();
+void wait_change_count(unsigned long count);
 
 void bip_config(unsigned long div,    
 	 unsigned long presc,

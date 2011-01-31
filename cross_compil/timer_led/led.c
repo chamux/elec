@@ -6,7 +6,7 @@ void chenillard()
 {
 	unsigned short currentLed=4;
 	switchAllOnState(OFF);
-	init_timer3(DIV_1000, PRESC_1000, COUNT_1000);
+	init_timer0(0x3, 0xff, COUNT_1000);
 
 	while(1)
 	{
