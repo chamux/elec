@@ -61,11 +61,15 @@ void musical_keyboard()
 	}
 }
 
+void play_score_init()
+{
+  init_timer0(0x4,0xff,TEMPO);  //tempo 120
+  bip_config(DIV_100,PRESC_100,COUNT_100);
+}
+
 void play_score(Note const * score)
 {
-	short i=0;
-
-	bip_config(DIV_100,PRESC_100,score[0].pitch);
+	short i=1;
 
 	while(score[i].pitch)
 	{
@@ -75,7 +79,7 @@ void play_score(Note const * score)
 			bip_start();
 		}
 
-		wait_change_count(score[i].value);
+		wait_change_count(score[0].value*score[i].value);
 		wait();
 
 		bip_stop();
@@ -88,7 +92,8 @@ void play_score(Note const * score)
 }
 
 // 2/4
-Note const clair_lune[]={{FA,CROCHE},{FA,CROCHE},{FA,CROCHE},{SOL,CROCHE},
+Note const clair_lune[]={{0,LARGO},
+			 {FA,CROCHE},{FA,CROCHE},{FA,CROCHE},{SOL,CROCHE},
 			 {LA,NOIRE},{SOL,NOIRE},
 			 {FA,CROCHE},{LA,CROCHE},{SOL,CROCHE},{SOL,CROCHE},
 			 {FA,NOIREP},{SIL,CROCHE}, 
@@ -108,7 +113,8 @@ Note const clair_lune[]={{FA,CROCHE},{FA,CROCHE},{FA,CROCHE},{SOL,CROCHE},
 
 
 //3/8 -> 3/4   -> without staccato
-Note const fur_elise[]={{MI8,CROCHE},{REd8,CROCHE},
+Note const fur_elise[]={{0,ALLEGRO},
+			{MI8,CROCHE},{REd8,CROCHE},
 			{MI8,CROCHE},{REd8,CROCHE},{MI8,CROCHE},{SI,CROCHE},{RE8,CROCHE},{DO8,CROCHE},
 			{LA,NOIRE},{SIL,CROCHE},{DO,CROCHE},{MI,CROCHE},{LA,CROCHE},
 			{SI,NOIRE},{SIL,CROCHE},{MI,CROCHE},{SOLd,CROCHE},{SI,CROCHE},

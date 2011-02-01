@@ -52,9 +52,9 @@ extern Note const fur_elise[];
 #define END   (unsigned long) 0
 
 /*************************************************/
-// value
+// Value
 
-#define TEMPO 4028
+#define TEMPO 8056/84
 
 #define RONDE    (unsigned long)TEMPO*4
 #define BLANCHEP (unsigned long)TEMPO*3
@@ -65,8 +65,18 @@ extern Note const fur_elise[];
 #define DOUBLE   (unsigned long)TEMPO/4
 
 /*************************************************/
+// Tempo
+
+#define LARGO    (unsigned long)84    //60
+#define ADAGIO   (unsigned long)63    //80
+#define MODERATO (unsigned long)50    //100
+#define ALLEGRO  (unsigned long)42    //120
+#define VIVACE   (unsigned long)36    //140
+
+/*************************************************/
 
 void musical_keyboard();
+void play_score_init();
 void play_score(Note const * score);
 
 #endif
