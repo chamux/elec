@@ -8,7 +8,7 @@ int main()
 {
 	play_score_init();
 	
-	play_score(clair_lune);
+	play_score(fur_elise);
 
 	serial_init();
 	switchAllOnState(ON);

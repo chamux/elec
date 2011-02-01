@@ -12,9 +12,6 @@ typedef struct {
 extern Note const clair_lune[];
 extern Note const fur_elise[];
 
-/*************************************************/
-#define STACCATO (unsigned long)50 
-// Duration of the silence between notes,no Staccato if 0
 
 /*************************************************/
 // Notes
@@ -48,8 +45,9 @@ extern Note const fur_elise[];
 #define SOL8  (unsigned long) RAPPORT/784
 #define MI16  (unsigned long) RAPPORT/1329
 
-#define SIL   (unsigned long) 1
-#define END   (unsigned long) 0
+#define STACCATO (unsigned long) 2
+#define SIL      (unsigned long) 1
+#define END      (unsigned long) 0
 
 /*************************************************/
 // Value
