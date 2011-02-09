@@ -78,8 +78,8 @@ int main()
 		}
 		else
 		{
-			serial_puts("\t------------Jump in 0x03000------------\n\r");
-			f=(void *)0x3000;
+			serial_puts("\t------------Jump in 0x030000------------\n\r");
+			f=(void *)0x30000;
 			f();
 			break;
 		}

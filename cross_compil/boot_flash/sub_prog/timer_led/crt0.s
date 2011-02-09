@@ -5,4 +5,4 @@ _start:
    bl fill_bss
    bl main
 _exit:
-   .word 0xdeedee
+   b _exit

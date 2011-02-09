@@ -35,4 +35,4 @@ $(EXE): $(OBJ) $(LDSCRIPT) Makefile
 	$(PREFIX)objdump -d $< > $@
 
 clean:
-	rm -f *~ $(OBJ) $(EXE).map $(EXE).lst $(EXE) *.swp 
+	rm -f *~ $(OBJ) $(EXE).hex $(EXE).map $(EXE).lst $(EXE) *.swp 

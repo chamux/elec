@@ -3,5 +3,5 @@
 _start:
    bl main
 _exit:
-   ldr pc,=0x0
+   b _exit
 
