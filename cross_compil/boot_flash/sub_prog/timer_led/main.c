@@ -6,7 +6,7 @@ int main()
 {
 	play_score_init();
 	
-	play_score(fur_elise);
+	play_score(poireau);
 
 	serial_init();
 	switchAllOnState(ON);

@@ -26,4 +26,15 @@ $(EXE): $(OBJ) $(LDSCRIPT) Makefile
 	$(PREFIX)objdump -d $< > $@
 
 clean:
-	rm -f *~ $(OBJ) $(EXE).map $(EXE).lst $(EXE) *.swp 
+	rm -f *~ $(OBJ) $(EXE).map $(EXE).lst $(EXE) *.swp *.d
+
+################################################################################
+# Gestion des dépendances
+
+ifneq "$(MAKECMDGOALS)" "clean" 
+
+-include $(patsubst %.c,%.d,$(SRCC))
+
+%.d : %.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -MM -MF $@ -MP -MT $(patsubst %.c,%.o,$<) $<
+endif

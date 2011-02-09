@@ -15,56 +15,54 @@
 
 void serial_init(){
 
-  //Setting up of ULCON0 : normal mode, no parity, one stop bit, word length = 8bits 
-  ULCON0 = 0x03;
-  //Setting up of UCON0 : polling mode
-  UCON0 = 0x005;
-  //Setting up UBRDIV0 : 
-  UBRDIV0 = (int)(MCLK/(bps*16)) - 1;
-  //FIFO enabled
-  UFCON0 = 0xf1;
+	//Setting up of ULCON0 : normal mode, no parity, one stop bit, word length = 8bits 
+	ULCON0 = 0x03;
+	//Setting up of UCON0 : polling mode
+	UCON0 = 0x005;
+	//Setting up UBRDIV0 : 
+	UBRDIV0 = (int)(MCLK/(bps*16)) - 1;
+	//FIFO enabled
+	UFCON0 = 0xf1;
 }
 
-
-void serial_putc(char c){
-
-  while(!(UTRSTAT0 & 0x02));
-  UTXH0 = c;
+void serial_putc(char c)
+{
+	while(!(UTRSTAT0 & 0x02));
+	UTXH0 = c;
 }
 
-
-char serial_getc(){
-
-  while(!(UTRSTAT0 & 0x01));
-  return URXH0; 
+char serial_getc()
+{
+	while(!(UTRSTAT0 & 0x01));
+	return URXH0; 
 }
 
-
-void serial_puts(char * s, short length){
-  
-  while(length>0)
-  {
-    serial_putc(*s);
-    s++;
-    length--;
-  }
+void serial_puts(char * s)
+{ 
+	while(*s)
+	{
+		serial_putc(*s);
+		s++;
+	}
 }
 
 inline void serial_newLine()
 {
-  serial_puts("\n\r",2);
+	serial_puts("\n\r");
 }
 
 short serial_getcWithTimer(char * charac)
 {
-  short test;
+	short test;
+	TCON |= 0x0000002;		//manuel update ON
+	TCON &= 0xffffffd;		//manuel update OFF
+	TCON |= 0x000001;		//start
+  
+	while( (!(UTRSTAT0 & 0x01)) && TCNTO0);
 
-  init_timer3(0x0003000, 0x000ff00, 52000, 0);
-  TCON |= 0x10000;
+	TCON &= ~0x000001;
 
-  while( (!(UTRSTAT0 & 0x01)) && TCNTO3);
-
-  test=UTRSTAT0 & 0x01;
-  *charac=test?URXH0:-1; 
-  return test;
+	test=UTRSTAT0 & 0x01;
+	*charac=test?URXH0:-1; 
+	return test;
 }

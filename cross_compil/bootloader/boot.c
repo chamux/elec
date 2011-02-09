@@ -8,17 +8,19 @@ int main()
 {
 	char receive_char;
 	unsigned long addr;
+	void (*f)(void);
 
 	serial_init();
-	serial_puts("\n\n\rBOOTLOADER by Bertrand & Samuel\n\r",36); 
+	init_timer0(0x4,0xff,COUNT_1000);
+	serial_puts("\n\n\rBOOTLOADER by Bertrand & Samuel\n\r"); 
 	switchAllOnState(OFF);
  
 	while(1)
 	{
-		serial_puts("\tL<addr> : data at addr in\n\r",28);
-		serial_puts("\tG<addr> : exec at addr in\n\r",28);
-		serial_puts("\tR<addr> : display addr in\n\r",28);
-		serial_puts("\t <addr> : 0x........\n\n\r",25);
+		serial_puts("\tL<addr> : data at addr in\n\r");
+		serial_puts("\tG<addr> : exec at addr in\n\r");
+		serial_puts("\tR<addr> : display addr in\n\r");
+		serial_puts("\t <addr> : 0x........\n\n\r");
 
  		receive_char = serial_getc();
 		switchOnOff(4,OFF);
@@ -35,7 +37,17 @@ int main()
 			if(testAddress(addr))
 				storeBytes((unsigned char *) addr);
 			else
+			{
+				serial_puts("Wrong address : 0x");
+				intToHexa(addr);
+				serial_puts("\n\rIt must be between 0x");
+				intToHexa(BSS_END);
+				serial_puts(" and 0x");
+				intToHexa(STACK_END);
+				serial_newLine();
+				serial_newLine();
 				switchOnOff(4,ON);
+			}
 
 			switchOnOff(1,OFF);
 
@@ -44,23 +56,22 @@ int main()
 		case 'G':
 		case 'g':
 			switchOnOff(2,ON);
-			addr = getAddress();
-			asm("mov pc, %[value]":: [value]"r"(addr));
+			f = (void *)getAddress();
+			f();
 			break;
 
 		case 'R':
 		case 'r':
 			switchOnOff(2,ON);
 			addr = getAddress();
-			serial_puts("\n\r-> ",5);
+			serial_puts("\n\r-> ");
 			intToHexa(*(unsigned long *)addr);
-			serial_puts("\n\r",2);
+			serial_puts("\n\r");
 			break;
 		}
 	}
 	return 0;
 }
-
 
 unsigned long getAddress()
 {
@@ -74,14 +85,10 @@ unsigned long getAddress()
 	return ((receive[0] == '0') & (receive[1] == 'x')) ? asciiToHex(receive + 2) : 0;
 }
 
-
-
-
 inline unsigned short testAddress(unsigned long addr)
 {
 	return ((addr > BSS_END) && (addr < STACK_END));
 }
-
 
 void storeBytes(unsigned char * addr)
 {
@@ -92,7 +99,7 @@ void storeBytes(unsigned char * addr)
 
 		if(!serial_getcWithTimer(&getReturn))
 		{
-			serial_puts("Time OUT\n\n\r",11);
+			serial_puts("Time OUT\n\n\r");
 			break;
 		}
 

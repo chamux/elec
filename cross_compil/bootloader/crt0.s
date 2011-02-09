@@ -5,8 +5,6 @@ _start:
    bl fill_bss
    bl main
 _exit:
-   ldr r0,=0xdeeedeee
-   str r0, [pc,#4]
-   nop
-   nop
+   .word 0xdeeedeee
+
 	

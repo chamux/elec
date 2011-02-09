@@ -49,7 +49,7 @@ void intToDeci(unsigned long nb)
   }
   lastZero+=lastZero!=9;
 
-  serial_puts(out+lastZero,10-lastZero);
+  serial_puts(out+lastZero);
 }
 
 unsigned long asciiToHex(char * receive)

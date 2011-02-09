@@ -16,6 +16,8 @@ int main()
 	serial_puts("BOOTLOADER by Chazot Bertrand & Mokrani Samuel !!\n\r"); 
 	switchAllOnState(OFF);
 
+	init_timer0(0x4, 0xc7, 51562);
+
 	while(1)
 	{
 		serial_puts("\tL<addr> : data at addr in\n\r");
@@ -25,7 +27,7 @@ int main()
 
 		serial_puts("\tYou have 5 seconds to enter a character\n\r");
 
-		if(serial_getcWithTimer5s(&receive_char))
+		if(serial_getcWithTimer(&receive_char))
 		{
 			switchOnOff(4,OFF);
 
@@ -41,10 +43,19 @@ int main()
 				if(testAddress(addr))
 					storeBytes((unsigned char *) addr);
 				else
+				{
+					serial_puts("Wrong address : 0x");
+					intToHexa(addr);
+					serial_puts("\n\rIt must be between 0x");
+					intToHexa(BSS_END);
+					serial_puts(" and 0x");
+					intToHexa(STACK_END);
+					serial_newLine();
+					serial_newLine();
 					switchOnOff(4,ON);
+				}
 
 				switchOnOff(1,OFF);
-
 				break;
 
 			case 'G':
@@ -52,7 +63,6 @@ int main()
 				switchOnOff(2,ON);
 				f = (void *)getAddress();
 				f();
-				switchOnOff(2,OFF);
 				break;
 
 			case 'R':
@@ -63,21 +73,6 @@ int main()
 				intToHexa(*(unsigned long *)addr);
 				serial_puts("\n\r");
 				switchOnOff(3,OFF);
-				break;
-			case 'c':
-			case 'C':
-				chenillard();
-				break;
-			case 'b':
-			case 'B':
-				bip();
-				break;
-			case 'p':
-			case 'P':
-//poireau
-				break;
-			default:
-				switchOnOff(4,ON);
 				break;
 			}
 		}
@@ -117,6 +112,8 @@ void storeBytes(unsigned char * addr)
 {
 	char getReturn;
 
+	init_timer0(0x4,0xff,COUNT_1000);
+
 	while((unsigned long)addr>BSS_END)
 	{
 
@@ -129,4 +126,6 @@ void storeBytes(unsigned char * addr)
 		*addr=getReturn;
 		addr++;
 	}
+
+	init_timer0(0x4, 0xc7, 51562);
 }
